@@ -1,0 +1,57 @@
+Question 1:
+
+(A)
+
+-- Create the Department table first without the foreign key constraint
+CREATE TABLE Department (
+    DepNo INT PRIMARY KEY,
+    DName VARCHAR(100),
+    Location VARCHAR(100),
+    MgrID INT
+);
+
+-- Create the Worker table
+CREATE TABLE Worker (
+    ID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Salary DECIMAL(10, 2),
+    JoiningDate DATE,
+    DepartmentNo INT,
+    FOREIGN KEY (DepartmentNo) REFERENCES Department(DepNo)
+);
+
+-- Alter the Department table to add the foreign key constraint
+
+ALTER TABLE Department
+ADD FOREIGN KEY (MgrID)
+REFERENCES Worker(ID);
+
+(B)
+SET FOREIGN_KEY_CHECKS=0;
+
+INSERT INTO Worker (ID, Name, Salary, JoiningDate, DepartmentNo)
+VALUES (1, 'John Smith', 50000, '2022-01-15', 1),
+       (2, 'Alice Johnson', 60000, '2021-05-20', 2),
+       (3, 'Michael Brown', 55000, '2023-03-10', 1),
+       (4, 'Jessica Miller', 52000, '2022-11-30', 2),
+       (5, 'Andrew Lee', 58000, '2024-02-18', 1);
+SET FOREIGN_KEY_CHECKS=1;
+
+INSERT INTO Department (DepNo, DName, Location, MgrID)
+VALUES (1, 'IT', 'New York', 1),
+       (2, 'HR', 'Los Angeles', 2),
+       (3, 'Finance', 'Chicago', 5),
+       (4, 'Marketing', 'Houston', 4),
+       (5, 'Operations', 'Dallas', 3);
+
+(C)
+
+SELECT DISTINCT Location FROM Department;
+
+(D)
+
+SELECT DName, COUNT(ID) AS "No. of Employees", AVG(Salary) AS "Average Salary" FROM Department JOIN Worker ON Department.DepNo = Worker.DepartmentNo GROUP BY DName;
+
+(E)
+
+SELECT CONCAT(UCASE(LEFT(Name, 1)), LCASE(SUBSTRING(Name, 2))) AS "Capitalized Name", LENGTH(Name) AS "Name Length" FROM Worker WHERE Name LIKE 'J%' OR Name LIKE 'A%' OR Name LIKE 'M%';

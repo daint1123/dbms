@@ -1,0 +1,35 @@
+Question 2:
+
+(A)
+
+CREATE TABLE Branch (BranchNo INT PRIMARY KEY,Street VARCHAR(255),City VARCHAR(100),Postcode VARCHAR(20));
+
+CREATE TABLE Staff (StaffNo INT PRIMARY KEY,FName VARCHAR(100),LName VARCHAR(100),Position VARCHAR(100),Sex CHAR(1),DOB DATE,Salary DECIMAL(10, 2),BranchN INT,FOREIGN KEY (BranchN) REFERENCES Branch(BranchNo));
+
+(B)
+
+INSERT INTO Branch (BranchNo, Street, City, Postcode)
+VALUES (1, '123 Main St', 'Mumbai', '400001'),
+       (2, '456 Elm St', 'Delhi', '110001'),
+       (3, '789 Oak St', 'Bangalore', '560001'),
+       (4, '101 Pine St', 'Chennai', '600001'),
+       (5, '222 Maple St', 'Kolkata', '700001');
+
+INSERT INTO Staff (StaffNo, FName, LName, Position, Sex, DOB, Salary, BranchN)
+VALUES (1, 'Ravi', 'Kumar', 'Manager', 'M', '2000-05-15', 60000, 1),
+       (2, 'Priya', 'Sharma', 'Assistant', 'F', '2002-08-20', 50000, 2),
+       (3, 'Amit', 'Patel', 'Clerk', 'M', '2004-10-10', 45000, 3),
+       (4, 'Neha', 'Gupta', 'Manager', 'F', '2005-02-25', 70000, 4),
+       (5, 'Sandeep', 'Singh', 'Assistant', 'M', '2007-12-05', 55000, 5);
+
+(C)
+
+SELECT FName, DOB FROM Staff WHERE YEAR(DOB) = 2005;
+
+(D)
+
+SELECT FName, CONCAT(REPEAT('*', ROUND(Salary/100))) AS SalaryRepresentation FROM Staff;
+
+(E)
+
+SELECT FName, LName, Salary FROM Staff INNER JOIN Branch ON Staff.BranchN = Branch.BranchNo WHERE City = 'Bangalore';

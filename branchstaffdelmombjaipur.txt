@@ -1,0 +1,37 @@
+Question 4:
+
+(A)
+
+CREATE TABLE Branch (BranchNo INT PRIMARY KEY, Street VARCHAR(255), City VARCHAR(100), Postcode VARCHAR(20));
+
+CREATE TABLE Staff (StaffNo INT PRIMARY KEY, FName VARCHAR(100), LName VARCHAR(100), Position VARCHAR(100), Sex CHAR(1), DOB DATE, Salary DECIMAL(10, 2), BranchN INT, FOREIGN KEY (BranchN) REFERENCES Branch(BranchNo));
+
+(B)
+
+INSERT INTO Branch (BranchNo, Street, City, Postcode)
+VALUES 
+    (1, '123 MG Road', 'Delhi', '110001'),
+    (2, '456 Park Street', 'Mumbai', '400001'),
+    (3, '789 Main Road', 'Chennai', '600001'),
+    (4, '101 Gandhi Marg', 'Jaipur', '302001'),
+    (5, '222 Beach Road', 'Kolkata', '700001');
+
+INSERT INTO Staff (StaffNo, FName, LName, Position, Sex, DOB, Salary, BranchN)
+VALUES 
+    (1, 'Aarav', 'Sharma', 'Manager', 'M', '1990-05-15', 60000.00, 1),
+    (2, 'Neha', 'Patel', 'Assistant', 'F', '1992-08-20', 50000.00, 2),
+    (3, 'Raj', 'Gupta', 'Clerk', 'M', '1995-10-10', 45000.00, 1),
+    (4, 'Priya', 'Singh', 'Manager', 'F', '1993-02-25', 70000.00, 4),
+    (5, 'Ananya', 'Kaur', 'Assistant', 'F', '1998-12-05', 55000.00, 3);
+
+(C)
+
+SELECT * FROM Branch WHERE City IN ('Delhi', 'Mumbai');
+
+(D)
+
+SELECT MIN(Salary) AS MinSalary, MAX(Salary) AS MaxSalary FROM Staff;
+
+(E)
+
+SELECT COUNT(*) AS FemaleWorkersInJaipur FROM Staff WHERE Sex = 'F' AND BranchN = 4;

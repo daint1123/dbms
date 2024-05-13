@@ -1,0 +1,35 @@
+Question 6:
+
+(A)
+
+CREATE TABLE Customer (CustomerID INT PRIMARY KEY, Customer_Name VARCHAR(50), City VARCHAR(50), ProductID INT, FOREIGN KEY (ProductID) REFERENCES Department(ProductID));
+
+CREATE TABLE Department (ProductID INT PRIMARY KEY, Prod_Name VARCHAR(50), Prod_details VARCHAR(100));
+
+(B)
+
+INSERT INTO Customer (CustomerID, Customer_Name, City, ProductID) VALUES
+(1, 'Rajesh Kumar', 'Delhi', 1),
+(2, 'Priya Singh', 'Mumbai', 2),
+(3, 'Amit Patel', 'Bangalore', 3),
+(4, 'Sunita Sharma', 'Delhi', 4),
+(5, 'Vijay Verma', 'Kolkata', 5);
+
+INSERT INTO Department (ProductID, Prod_Name, Prod_details) VALUES
+(1, 'Toothpaste', 'Mint flavor, 100g'),
+(2, 'Toothbrush', 'Soft bristles, pack of 3'),
+(3, 'Shampoo', 'Anti-dandruff, 200ml'),
+(4, 'Soap', 'Aloe vera, 75g'),
+(5, 'Facewash', 'Oil control, 150ml');
+
+(C)
+
+SELECT DISTINCT c.Customer_Name FROM Customer c JOIN Department d ON c.ProductID = d.ProductID WHERE d.Prod_Name IN ('Toothpaste', 'Toothbrush');
+
+(D)
+
+SELECT c.Customer_Name, COUNT(*) AS Total_Products_Bought FROM Customer c GROUP BY c.Customer_Name;
+
+(E)
+
+SELECT DISTINCT d.Prod_Name FROM Customer c JOIN Department d ON c.ProductID = d.ProductID WHERE c.City = 'Delhi';

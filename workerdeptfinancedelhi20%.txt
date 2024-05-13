@@ -1,0 +1,64 @@
+Question 5:
+
+(A)
+
+-- Create the Department table first without the foreign key constraint
+CREATE TABLE Department (
+    DepNo INT PRIMARY KEY,
+    DName VARCHAR(100),
+    Location VARCHAR(100),
+    MgrID INT
+);
+
+-- Create the Worker table
+CREATE TABLE Worker (
+    ID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Salary DECIMAL(10, 2),
+    JoiningDate DATE,
+    DepartmentNo INT,
+    FOREIGN KEY (DepartmentNo) REFERENCES Department(DepNo)
+);
+
+-- Alter the Department table to add the foreign key constraint
+ALTER TABLE Department
+ADD FOREIGN KEY (MgrID)
+REFERENCES Worker(ID);
+
+(B)
+SET FOREIGN_KEY_CHECKS=0;
+
+INSERT INTO Worker (ID, Name, Salary, JoiningDate, DepartmentNo)
+VALUES 
+    (1, 'Rajesh', 50000.00, '2022-01-15', 1),
+    (2, 'Sneha', 60000.00, '2021-05-20', 2),
+    (3, 'Amit', 55000.00, '2023-03-10', 1),
+    (4, 'Priya', 70000.00, '2020-11-08', 3),
+    (5, 'Manish', 65000.00, '2024-02-28', 2);
+SET FOREIGN_KEY_CHECKS=1;
+
+INSERT INTO Department (DepNo, DName, Location, MgrID)
+VALUES 
+    (1, 'Finance', 'Delhi', 1),
+    (2, 'HR', 'Mumbai', 2),
+    (3, 'Marketing', 'Bangalore', 4),
+    (4, 'Operations', 'Delhi', 5),
+    (5, 'IT', 'Pune', NULL);
+
+(C)
+
+SELECT w.Name AS WorkerName, d.DName AS DepartmentName, w2.Name AS ManagerName FROM Worker w INNER JOIN Department d ON w.DepartmentNo = d.DepNo LEFT JOIN Worker w2 ON d.MgrID = w2.ID;
+
+(D)
+
+SELECT COUNT(*) AS WorkersInFinance FROM Worker WHERE DepartmentNo = (SELECT DepNo FROM Department WHERE DName = 'Finance');
+
+(E)
+
+UPDATE Worker
+SET Salary = Salary * 1.20
+WHERE DepartmentNo IN (
+  SELECT DepNo
+  FROM Department
+  WHERE Location = 'Delhi'
+);
